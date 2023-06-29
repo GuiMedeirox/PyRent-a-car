@@ -11,7 +11,7 @@ def criar_carro(modelo, ano, placa):
     with open("carros.txt", "a") as arquivo:
         arquivo.write(f"{carro.modelo},{carro.ano},{carro.placa}\n")
 
-def obter_carros():
+def obter_carros(gambi):
     carros = []
     with open("carros.txt", "r") as arquivo:
         linhas = arquivo.readlines()
@@ -19,10 +19,21 @@ def obter_carros():
             dados = linha.strip().split(",")
             carro = Carro(dados[0], dados[1], dados[2])
             carros.append(carro)
+    if gambi == True: 
+        for i in carros: 
+            print(f"{i.modelo}, {i.placa}, {i.ano}")
     return carros
 
+# with open("carros.txt", "r") as arquivo:
+#     linhas = arquivo.readlines()
+#     for linha in linhas:
+#         dados = linha.strip().split(",")
+#         carro = Carro(dados[0], dados[1], dados[2])
+#         print(carro.placa)
+
+
 def atualizar_carro(placa, novo_modelo, novo_ano):
-    carros = obter_carros()
+    carros = obter_carros(False)
     for carro in carros:
         if carro.placa == placa:
             carro.modelo = novo_modelo
@@ -32,7 +43,7 @@ def atualizar_carro(placa, novo_modelo, novo_ano):
             arquivo.write(f"{carro.modelo},{carro.ano},{carro.placa}\n")
 
 def deletar_carro(placa):
-    carros = obter_carros()
+    carros = obter_carros(False)
     carros = [carro for carro in carros if carro.placa != placa]
     with open("carros.txt", "w") as arquivo:
         for carro in carros:
@@ -45,39 +56,30 @@ class Cliente:
 
 def validar_cpf(cpf):
     cpf = re.sub('[^0-9]', '', cpf)
-
     if len(cpf) != 11:
         return False
-
     if cpf == cpf[0] * 11:
         return False
-
     soma = 0
     peso = 10
     for i in range(9):
         soma += int(cpf[i]) * peso
         peso -= 1
-
     resto = (soma * 10) % 11
     if resto == 10:
         resto = 0
-
     if resto != int(cpf[9]):
         return False
-
     soma = 0
     peso = 11
     for i in range(10):
         soma += int(cpf[i]) * peso
         peso -= 1
-
     resto = (soma * 10) % 11
     if resto == 10:
         resto = 0
-
     if resto != int(cpf[10]):
         return False
-
     return True
 
 def criar_cliente(nome, cpf):
@@ -88,7 +90,7 @@ def criar_cliente(nome, cpf):
     else:
         print("CPF inválido.")
 
-def obter_clientes():
+def obter_clientes(gambi):
     clientes = []
     with open("clientes.txt", "r") as arquivo:
         linhas = arquivo.readlines()
@@ -96,10 +98,13 @@ def obter_clientes():
             dados = linha.strip().split(",")
             cliente = Cliente(dados[0], dados[1])
             clientes.append(cliente)
+        if gambi == True: 
+            for i in clientes: 
+                print(f"{i.nome}, {i.cpf}")
     return clientes
 
 def atualizar_cliente(cpf, novo_nome):
-    clientes = obter_clientes()
+    clientes = obter_clientes(False)
     for cliente in clientes:
         if cliente.cpf == cpf:
             cliente.nome = novo_nome
@@ -108,7 +113,7 @@ def atualizar_cliente(cpf, novo_nome):
             arquivo.write(f"{cliente.nome},{cliente.cpf}\n")
 
 def deletar_cliente(cpf):
-    clientes = obter_clientes()
+    clientes = obter_clientes(False)
     clientes = [cliente for cliente in clientes if cliente.cpf != cpf]
     with open("clientes.txt", "w") as arquivo:
         for cliente in clientes:
@@ -120,8 +125,8 @@ class Aluguel:
         self.placa = placa
 
 def criar_aluguel(cpf, placa):
-    clientes = obter_clientes()
-    carros = obter_carros()
+    clientes = obter_clientes(False)
+    carros = obter_carros(False)
 
     cpf_existe = False
     for cliente in clientes:
@@ -151,7 +156,9 @@ def obter_alugueis():
             dados = linha.strip().split(",")
             aluguel = Aluguel(dados[0], dados[1])
             alugueis.append(aluguel)
-    return alugueis
+        print("CPF || PLACA")
+        for i in alugueis: 
+            print(f"{i.cpf}, {i.placa}")
 
 def atualizar_aluguel(cpf, nova_placa):
     alugueis = obter_alugueis()
@@ -186,12 +193,13 @@ def main():
     print("13 - SOBRE O PROJETO") 
     print("14 - SAIR")
 
+
 while True: 
   main()
   option = int(input("\n Digita a opção: "))
 
   if (option == 1): 
-    obter_carros()
+    obter_carros(True)
   elif (option == 2):
     modelo = input("Digita o modelo do carro: ")
     ano = input("Digita o ano do carro: ")
@@ -206,7 +214,7 @@ while True:
     placa = input("\n Placa do carro: ")
     deletar_carro(placa)
   elif (option == 5): 
-    obter_clientes()
+    obter_clientes(False)
   elif (option == 6): 
     nome = input("\nNome do cliente: ")
     cpf = input("\nCPF do cliente: ")
