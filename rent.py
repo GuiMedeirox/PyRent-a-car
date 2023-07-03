@@ -24,14 +24,6 @@ def obter_carros(gambi):
             print(f"{i.modelo}, {i.placa}, {i.ano}")
     return carros
 
-# with open("carros.txt", "r") as arquivo:
-#     linhas = arquivo.readlines()
-#     for linha in linhas:
-#         dados = linha.strip().split(",")
-#         carro = Carro(dados[0], dados[1], dados[2])
-#         print(carro.placa)
-
-
 def atualizar_carro(placa, novo_modelo, novo_ano):
     carros = obter_carros(False)
     for carro in carros:
@@ -159,15 +151,18 @@ def obter_alugueis():
         print("CPF || PLACA")
         for i in alugueis: 
             print(f"{i.cpf}, {i.placa}")
+    return alugueis
 
 def atualizar_aluguel(cpf, nova_placa):
     alugueis = obter_alugueis()
     for aluguel in alugueis:
         if aluguel.cpf == cpf:
             aluguel.placa = nova_placa
+            print("Vasco")
     with open("alugueis.txt", "w") as arquivo:
-        for aluguel in alugueis:
+       for aluguel in alugueis:
             arquivo.write(f"{aluguel.cpf},{aluguel.placa}\n")
+        
 
 def deletar_aluguel(cpf):
     alugueis = obter_alugueis()
@@ -193,7 +188,6 @@ def main():
     print("13 - SOBRE O PROJETO") 
     print("14 - SAIR")
 
-
 while True: 
   main()
   option = int(input("\n Digita a opção: "))
@@ -214,7 +208,7 @@ while True:
     placa = input("\n Placa do carro: ")
     deletar_carro(placa)
   elif (option == 5): 
-    obter_clientes(False)
+    obter_clientes(True)
   elif (option == 6): 
     nome = input("\nNome do cliente: ")
     cpf = input("\nCPF do cliente: ")
