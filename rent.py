@@ -11,7 +11,7 @@ def criar_carro(modelo, ano, placa):
     with open("carros.txt", "a") as arquivo:
         arquivo.write(f"{carro.modelo},{carro.ano},{carro.placa}\n")
 
-def obter_carros(gambi):
+def obter_carros():
     carros = []
     with open("carros.txt", "r") as arquivo:
         linhas = arquivo.readlines()
@@ -19,13 +19,10 @@ def obter_carros(gambi):
             dados = linha.strip().split(",")
             carro = Carro(dados[0], dados[1], dados[2])
             carros.append(carro)
-    if gambi == True: 
-        for i in carros: 
-            print(f"{i.modelo}, {i.placa}, {i.ano}")
     return carros
 
 def atualizar_carro(placa, novo_modelo, novo_ano):
-    carros = obter_carros(False)
+    carros = obter_carros()
     for carro in carros:
         if carro.placa == placa:
             carro.modelo = novo_modelo
@@ -35,7 +32,7 @@ def atualizar_carro(placa, novo_modelo, novo_ano):
             arquivo.write(f"{carro.modelo},{carro.ano},{carro.placa}\n")
 
 def deletar_carro(placa):
-    carros = obter_carros(False)
+    carros = obter_carros()
     carros = [carro for carro in carros if carro.placa != placa]
     with open("carros.txt", "w") as arquivo:
         for carro in carros:
@@ -82,7 +79,7 @@ def criar_cliente(nome, cpf):
     else:
         print("CPF inválido.")
 
-def obter_clientes(gambi):
+def obter_clientes():
     clientes = []
     with open("clientes.txt", "r") as arquivo:
         linhas = arquivo.readlines()
@@ -90,13 +87,13 @@ def obter_clientes(gambi):
             dados = linha.strip().split(",")
             cliente = Cliente(dados[0], dados[1])
             clientes.append(cliente)
-        if gambi == True: 
-            for i in clientes: 
-                print(f"{i.nome}, {i.cpf}")
+        # if gambi == True: 
+        #     for i in clientes: 
+        #         print(f"{i.nome}, {i.cpf}")
     return clientes
 
 def atualizar_cliente(cpf, novo_nome):
-    clientes = obter_clientes(False)
+    clientes = obter_clientes()
     for cliente in clientes:
         if cliente.cpf == cpf:
             cliente.nome = novo_nome
@@ -105,7 +102,7 @@ def atualizar_cliente(cpf, novo_nome):
             arquivo.write(f"{cliente.nome},{cliente.cpf}\n")
 
 def deletar_cliente(cpf):
-    clientes = obter_clientes(False)
+    clientes = obter_clientes()
     clientes = [cliente for cliente in clientes if cliente.cpf != cpf]
     with open("clientes.txt", "w") as arquivo:
         for cliente in clientes:
@@ -117,8 +114,8 @@ class Aluguel:
         self.placa = placa
 
 def criar_aluguel(cpf, placa):
-    clientes = obter_clientes(False)
-    carros = obter_carros(False)
+    clientes = obter_clientes()
+    carros = obter_carros()
 
     cpf_existe = False
     for cliente in clientes:
@@ -148,9 +145,9 @@ def obter_alugueis():
             dados = linha.strip().split(",")
             aluguel = Aluguel(dados[0], dados[1])
             alugueis.append(aluguel)
-        print("CPF || PLACA")
-        for i in alugueis: 
-            print(f"{i.cpf}, {i.placa}")
+        # print("CPF || PLACA")
+        # for i in alugueis: 
+        #     print(f"{i.cpf}, {i.placa}")
     return alugueis
 
 def atualizar_aluguel(cpf, nova_placa):
@@ -193,7 +190,9 @@ while True:
   option = int(input("\n Digita a opção: "))
 
   if (option == 1): 
-    obter_carros(True)
+    aux = obter_carros()
+    for i in aux: 
+        print(f"{i.modelo} {i.placa} {i.ano}")
   elif (option == 2):
     modelo = input("Digita o modelo do carro: ")
     ano = input("Digita o ano do carro: ")
@@ -208,7 +207,9 @@ while True:
     placa = input("\n Placa do carro: ")
     deletar_carro(placa)
   elif (option == 5): 
-    obter_clientes(True)
+    aux = obter_clientes()
+    for i in aux: 
+        print(f"{i.nome} {i.cpf}")
   elif (option == 6): 
     nome = input("\nNome do cliente: ")
     cpf = input("\nCPF do cliente: ")
@@ -221,7 +222,9 @@ while True:
     cpf = input("\nDigita o CPF do cliente a ser deletado: ")
     deletar_cliente(cpf)
   elif (option == 9): 
-    obter_alugueis()
+    aux = obter_alugueis()
+    for i in aux: 
+        print(f"{i.cpf} {i.placa}")
   elif (option == 10): 
     cpf = input("\n CPF do cliente: ")
     placa = input("\n Placa do carro: ")
