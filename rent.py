@@ -87,9 +87,6 @@ def obter_clientes():
             dados = linha.strip().split(",")
             cliente = Cliente(dados[0], dados[1])
             clientes.append(cliente)
-        # if gambi == True: 
-        #     for i in clientes: 
-        #         print(f"{i.nome}, {i.cpf}")
     return clientes
 
 def atualizar_cliente(cpf, novo_nome):
@@ -145,9 +142,6 @@ def obter_alugueis():
             dados = linha.strip().split(",")
             aluguel = Aluguel(dados[0], dados[1])
             alugueis.append(aluguel)
-        # print("CPF || PLACA")
-        # for i in alugueis: 
-        #     print(f"{i.cpf}, {i.placa}")
     return alugueis
 
 def atualizar_aluguel(cpf, nova_placa):
@@ -241,3 +235,6 @@ while True:
         print("PyRent-a-car: o melhor amigo da locadora de veículos!") 
   elif (option == 14): 
     exit()
+
+
+    
